@@ -1,0 +1,14 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "strict": true,
+    "esModuleInterop": true,
+    "checkJs": true,
+    "paths": {
+      "components/*": ["components/*"],
+      "utils/*": ["utils/*"],
+      "@env": ["env.js"]
+    }
+  }
+}
