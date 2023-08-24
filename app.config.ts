@@ -5,9 +5,9 @@ import { ClientEnv } from './env';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'expo-base',
+  name: 'favorite-places-app',
   // ... the rest config
-  slug: 'expo-base',
+  slug: 'favorite-places-app',
   version: '1.0.0',
   orientation: 'default',
   icon: './src/assets/icon.png',

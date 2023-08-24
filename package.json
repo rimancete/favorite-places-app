@@ -1,5 +1,5 @@
 {
-  "name": "expo-base",
+  "name": "favorite-places-app",
   "version": "1.0.0",
   "scripts": {
     "start": "APP_ENV=development expo start --clear",
