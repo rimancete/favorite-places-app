@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "checkJs": true,
     "paths": {
-      "components/*": ["components/*"],
+      "components": ["components/index.ts"],
       "utils/*": ["utils/*"],
       "@env": ["env.js"]
     }

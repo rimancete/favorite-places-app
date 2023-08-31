@@ -1,3 +1,5 @@
 import PlacesList from './PlacesList';
+import FormContainer from './FormContainer';
+import IconButton from './IconButton';
 
-export { PlacesList };
+export { PlacesList, FormContainer, IconButton };

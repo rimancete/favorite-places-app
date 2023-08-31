@@ -1,23 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-import { Env } from '@env';
+// import { Env } from '@env';
+import Screens from 'components/Screens';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
-      <Text>Env exemple key value: {Env.API_URL}</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="dark" />
+      <Screens />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

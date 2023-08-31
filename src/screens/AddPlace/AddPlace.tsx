@@ -1,3 +1,5 @@
+import { FormContainer } from 'components';
+
 export default function AddPlace() {
-  return <h1>AddPlace</h1>;
+  return <FormContainer />;
 }
