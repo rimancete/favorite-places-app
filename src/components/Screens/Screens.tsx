@@ -4,18 +4,30 @@ import { IconButton } from 'components';
 
 import AddPlace from 'screens/AddPlace';
 import Places from 'screens/Places';
+import Login from 'screens/Login';
 
 export type RootStackParamList = {
+  Login: undefined;
   Places: undefined;
   AddPlace: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// SET ROOT AUTHENTICATION NAVIGATIONS
+function AuthStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+}
+
 function Screens() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="Places"
           component={Places}

@@ -1,9 +1,8 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
-export default function Formcontainer() {
-  return (
-    <View>
-      <Text>the place form</Text>
-    </View>
-  );
+interface FormcontainerProps {
+  children: React.ReactNode;
+}
+export default function Formcontainer({ children }: FormcontainerProps) {
+  return <View>{children}</View>;
 }

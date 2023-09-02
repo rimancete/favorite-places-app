@@ -26,7 +26,10 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'no-restricted-exports': 'off',
-    'import/no-extraneous-dependencies': 'error',
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: false, optionalDependencies: false, peerDependencies: false },
+    ],
     'react/no-unstable-nested-components': [
       'error',
       {

@@ -16,6 +16,8 @@ require('dotenv').config({
 const client = z.object({
   APP_ENV: z.enum(['development', 'staging', 'production']),
   API_URL: z.string(),
+  AUTH_API_URL: z.string(),
+  AUTH_API_KEY: z.string(),
   API_TOKEN: z.string(),
   COMPANY: z.string(),
 });
@@ -29,6 +31,8 @@ const _clientEnv = {
   APP_ENV,
 
   // ADD YOUR ENV VARS HERE TOO
+  AUTH_API_URL: process.env.AUTH_API_URL,
+  AUTH_API_KEY: process.env.AUTH_API_KEY,
   API_URL: process.env.API_URL,
   API_TOKEN: process.env.API_TOKEN,
   COMPANY: process.env.COMPANY,
