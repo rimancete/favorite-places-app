@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { LoginScreenNavigationHookProps } from 'types';
 import { SigninType, SignupType } from 'types/models';
+import theme from 'styles/theme';
+import Button from 'components/Button';
 import FormContent from './components/FormContent';
 
 interface AuthContentProps {
@@ -61,7 +63,11 @@ export default function AuthContent({ isLogin, onAuthenticate }: AuthContentProp
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
-      {/* CREATE BUTTON */}
+      <View style={styles.buttons}>
+        <Button onPress={switchAuthModeHandler} isFlat>
+          {isLogin ? 'Create a new user' : 'Log in instead'}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -72,12 +78,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
-    // backgroundColor: Colors.primary800,
+    backgroundColor: theme().colors.primary800,
     elevation: 2,
-    // shadowColor: 'black',
-    // shadowOffset: { width: 1, height: 1 },
-    // shadowOpacity: 0.35,
-    // shadowRadius: 4,
+    ...theme().ioShadow,
   },
   buttons: {
     marginTop: 8,

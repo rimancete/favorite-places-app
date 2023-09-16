@@ -9,3 +9,10 @@ export type SignupType = {
   password: string;
   confirmPassword: string;
 };
+
+export type LoginResponse = {
+  localId: string;
+  email: string;
+  refreshToken: string;
+  idToken: string;
+};

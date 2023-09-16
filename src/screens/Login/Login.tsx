@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
 import { LoadingOverlay } from 'components';
-import AuthContent from 'components/Auth/AuthContent';
 import { SigninType } from 'types/models';
 import { login } from 'utils/request';
+import AuthContent from '../../components/Auth/AuthContent';
 
 export default function Login() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
