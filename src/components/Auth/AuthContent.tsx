@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { LoginScreenNavigationHookProps } from 'types';
@@ -9,11 +9,11 @@ import Button from 'components/Button';
 import FormContent from './components/FormContent';
 
 interface AuthContentProps {
-  isLogin: boolean;
+  isLogin?: boolean;
   onAuthenticate: ({ email, password }: SigninType) => void;
 }
 
-export default function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
+export default function AuthContent({ isLogin = false, onAuthenticate }: AuthContentProps) {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -25,7 +25,7 @@ export default function AuthContent({ isLogin, onAuthenticate }: AuthContentProp
 
   const switchAuthModeHandler = useCallback(() => {
     if (isLogin) {
-      navigation.replace('Login');
+      navigation.replace('Signup');
     } else {
       navigation.replace('Login');
     }
@@ -44,16 +44,25 @@ export default function AuthContent({ isLogin, onAuthenticate }: AuthContentProp
       const emailsAreEqual = email === confirmEmail;
       const passwordsAreEqual = password === confirmPassword;
 
-      setCredentialsInvalid({
-        email: !emailIsValid,
-        confirmEmail: !emailIsValid || !emailsAreEqual,
-        password: !passwordIsValid,
-        confirmPassword: !passwordIsValid || !passwordsAreEqual,
-      });
+      if (
+        !emailIsValid ||
+        !passwordIsValid ||
+        (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
+      ) {
+        Alert.alert('Invalid input', 'Please check your entered credentials.');
+
+        setCredentialsInvalid({
+          email: !emailIsValid,
+          confirmEmail: !emailIsValid || !emailsAreEqual,
+          password: !passwordIsValid,
+          confirmPassword: !passwordIsValid || !passwordsAreEqual,
+        });
+        return;
+      }
 
       onAuthenticate({ email, password });
     },
-    [onAuthenticate],
+    [isLogin, onAuthenticate],
   );
 
   return (

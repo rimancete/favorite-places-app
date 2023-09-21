@@ -11,7 +11,7 @@ export default function PlacesList({ places }: PlacesListProps) {
   if (!places || !places.length)
     return (
       <View style={styles.fallbackContainer}>
-        <Text style={styles.fallbackText}>No placess added yet - start adding some!</Text>
+        <Text style={styles.fallbackText}>No places added yet - start adding some!</Text>
       </View>
     );
 

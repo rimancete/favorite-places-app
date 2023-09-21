@@ -67,7 +67,7 @@ export default function FormContent({ isLogin, onSubmit, credentialsInvalid }: F
       {!isLogin && (
         <Input
           label="Confirm Email Address"
-          onUpdateValue={(e) => updateInputValueHandler.bind('confirmEmail', e)}
+          onUpdateValue={(e) => updateInputValueHandler('confirmEmail', e)}
           value={enteredConfirmEmail}
           keyboardType="email-address"
           isInvalid={emailsDontMatch}

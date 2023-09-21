@@ -7,13 +7,17 @@ import { IconButton } from 'components';
 import AddPlace from 'screens/AddPlace';
 import Places from 'screens/Places';
 import Login from 'screens/Login';
+import Signup from 'screens/Signup';
 import theme from 'styles/theme';
 import { useAuth } from 'hooks';
 import { View } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
+import { AuthProvider } from 'hooks/useAuth';
+import { User } from 'hooks/useAuth/useAuth';
 
 export type RootStackParamList = {
   Login: undefined;
+  Signup: undefined;
   Places: undefined;
   AddPlace: undefined;
 };
@@ -32,12 +36,14 @@ function AuthStack() {
         contentStyle: { backgroundColor: theme().colors.primary100 },
       }}>
       <Stack.Screen name="Login" component={Login} />
-      {/* <Stack.Screen name="Signup" component={SignupScreen} /> */}
+      <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>
   );
 }
 
 function AuthenticatedStack() {
+  const { updateUser } = useAuth();
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -50,12 +56,23 @@ function AuthenticatedStack() {
         component={Places}
         options={({ navigation }) => ({
           headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="add"
-              color={tintColor}
-              size={24}
-              onPress={() => navigation.navigate('AddPlace')}
-            />
+            <View style={{ flexDirection: 'row' }}>
+              <IconButton
+                icon="add"
+                color={tintColor}
+                size={24}
+                onPress={() => navigation.navigate('AddPlace')}
+              />
+              <IconButton
+                icon="logout"
+                color={tintColor}
+                size={24}
+                onPress={async () => {
+                  await AsyncStorage.removeItem('token');
+                  updateUser({} as User);
+                }}
+              />
+            </View>
           ),
         })}
       />
@@ -101,9 +118,11 @@ function Screens() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Navigation />
-    </View>
+    <AuthProvider>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <Navigation />
+      </View>
+    </AuthProvider>
   );
 }
 
