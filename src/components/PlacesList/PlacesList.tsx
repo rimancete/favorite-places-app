@@ -1,6 +1,7 @@
 import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
 
 import { PlaceType } from 'models';
+import theme from 'styles/theme';
 import PlaceItem from './components/PlaceItem';
 
 interface PlacesListProps {
@@ -39,5 +40,6 @@ const styles = StyleSheet.create({
   },
   fallbackText: {
     fontSize: 16,
+    color: theme().colors.primary200,
   },
 });

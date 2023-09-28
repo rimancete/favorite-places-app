@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import theme from 'styles/theme';
 
 interface LoadingOverlayProps {
   message: string;
@@ -23,5 +24,6 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     marginBottom: 12,
+    color: theme().colors.primary200,
   },
 });

@@ -24,7 +24,7 @@ export default function Button({ onPress, isFlat = false, children }: ButtonProp
 
   const flatTextButtonStyle: StyleProp<TextStyle> = {
     textAlign: 'center',
-    color: theme().colors.primary100,
+    color: theme().colors.primary200,
   };
 
   return (

@@ -12,7 +12,6 @@ import theme from 'styles/theme';
 import { useAuth } from 'hooks';
 import { View } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
-import { AuthProvider } from 'hooks/useAuth';
 import { User } from 'hooks/useAuth/useAuth';
 
 export type RootStackParamList = {
@@ -32,8 +31,8 @@ function AuthStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: theme().colors.primary500 },
-        headerTintColor: 'white',
-        contentStyle: { backgroundColor: theme().colors.primary100 },
+        headerTintColor: theme().colors.gray700,
+        contentStyle: { backgroundColor: theme().colors.gray700 },
       }}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
@@ -48,13 +47,14 @@ function AuthenticatedStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: theme().colors.primary500 },
-        headerTintColor: 'white',
-        contentStyle: { backgroundColor: theme().colors.primary100 },
+        headerTintColor: theme().colors.gray700,
+        contentStyle: { backgroundColor: theme().colors.gray700 },
       }}>
       <Stack.Screen
         name="Places"
         component={Places}
         options={({ navigation }) => ({
+          title: 'Your Favorite Places',
           headerRight: ({ tintColor }) => (
             <View style={{ flexDirection: 'row' }}>
               <IconButton
@@ -76,13 +76,14 @@ function AuthenticatedStack() {
           ),
         })}
       />
-      <Stack.Screen name="AddPlace" component={AddPlace} />
+      <Stack.Screen name="AddPlace" component={AddPlace} options={{ title: 'Add a new Place' }} />
     </Stack.Navigator>
   );
 }
 
 function Navigation() {
   const { isAuthenticated } = useAuth();
+
   return (
     <NavigationContainer>
       {!isAuthenticated ? <AuthStack /> : <AuthenticatedStack />}
@@ -118,11 +119,9 @@ function Screens() {
   }
 
   return (
-    <AuthProvider>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <Navigation />
-      </View>
-    </AuthProvider>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <Navigation />
+    </View>
   );
 }
 

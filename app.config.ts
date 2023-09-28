@@ -31,5 +31,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     ...ClientEnv,
   },
-  // .. sentry config and other stuff here
+  plugins: [
+    [
+      'expo-image-picker',
+      {
+        cameraPermission:
+          'The app need access to your camera in order to take photos of your favorite places.',
+      },
+    ],
+  ],
 });
