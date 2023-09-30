@@ -73,7 +73,7 @@ export default function AuthContent({ isLogin = false, onAuthenticate }: AuthCon
         credentialsInvalid={credentialsInvalid}
       />
       <View style={styles.buttons}>
-        <Button onPress={switchAuthModeHandler} isFlat>
+        <Button onPress={switchAuthModeHandler} variant="flat">
           {isLogin ? 'Create a new user' : 'Log in instead'}
         </Button>
       </View>

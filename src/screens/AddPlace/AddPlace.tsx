@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-import { FormContainer, ImagePicker } from 'components';
+import { FormContainer, ImagePicker, LocationPicker } from 'components';
 import theme from 'styles/theme';
 
 export default function AddPlace() {
@@ -17,6 +17,7 @@ export default function AddPlace() {
         <TextInput style={styles.input} onChangeText={changeTitleHandler} value={enteredTitle} />
       </View>
       <ImagePicker />
+      <LocationPicker />
     </FormContainer>
   );
 }
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomColor: theme().colors.primary700,
     borderBottomWidth: 2,
+    borderRadius: 4,
     backgroundColor: theme().colors.primary100,
   },
 });

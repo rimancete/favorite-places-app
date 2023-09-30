@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import {
   Pressable,
   PressableProps,
@@ -7,22 +8,95 @@ import {
   TextProps,
   TextStyle,
   View,
+  ViewStyle,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import theme from 'styles/theme';
 
 interface ButtonProps extends PressableProps {
   children: TextProps['children'];
-  isFlat?: boolean;
+  variant?: 'default' | 'flat' | 'outlined';
+  icon?: keyof typeof MaterialIcons.glyphMap;
 }
 
-export default function Button({ onPress, isFlat = false, children }: ButtonProps) {
-  const flatButtonPressableStyle = {
+export default function Button({
+  onPress,
+  variant = 'default',
+  icon = 'camera-alt',
+  children,
+  ...props
+}: ButtonProps) {
+  const isFlat = variant === 'flat';
+  const isOutlined = variant === 'outlined';
+
+  const outlinedPressableStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return {
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      margin: 4,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderRadius: 6,
+      borderColor: theme().colors.primary500,
+    };
+  }, []);
+
+  const outlinedPressablePressedStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return {
+      opacity: 0.7,
+    };
+  }, []);
+
+  const outlinedIconStyle: StyleProp<TextStyle> = useMemo(() => {
+    return {
+      marginRight: 6,
+    };
+  }, []);
+
+  const outlinedTextStyle: StyleProp<TextStyle> = useMemo(() => {
+    return {
+      color: theme().colors.primary500,
+    };
+  }, []);
+
+  const outlinedButton = useCallback(
+    () => (
+      <Pressable
+        style={({ pressed }) => [outlinedPressableStyle, pressed && outlinedPressablePressedStyle]}
+        onPress={onPress}
+        {...props}>
+        <MaterialIcons
+          style={outlinedIconStyle}
+          name={icon}
+          size={18}
+          color={theme().colors.primary500}
+        />
+        <Text style={outlinedTextStyle}>{children}</Text>
+      </Pressable>
+    ),
+    [
+      children,
+      icon,
+      onPress,
+      outlinedIconStyle,
+      outlinedPressablePressedStyle,
+      outlinedPressableStyle,
+      outlinedTextStyle,
+      props,
+    ],
+  );
+
+  if (isOutlined) return outlinedButton();
+
+  const flatPressableStyle: StyleProp<ViewStyle> = {
     paddingVertical: 6,
     paddingHorizontal: 12,
   };
 
-  const flatTextButtonStyle: StyleProp<TextStyle> = {
+  const flatTextStyle: StyleProp<TextStyle> = {
     textAlign: 'center',
     color: theme().colors.primary200,
   };
@@ -30,12 +104,13 @@ export default function Button({ onPress, isFlat = false, children }: ButtonProp
   return (
     <Pressable
       style={({ pressed }) => [
-        isFlat ? { ...flatButtonPressableStyle } : styles.button,
+        isFlat ? { ...flatPressableStyle } : styles.button,
         pressed && styles.pressed,
       ]}
+      {...props}
       onPress={onPress}>
       <View>
-        <Text style={isFlat ? { ...flatTextButtonStyle } : styles.buttonText}>{children}</Text>
+        <Text style={isFlat ? { ...flatTextStyle } : styles.buttonText}>{children}</Text>
       </View>
     </Pressable>
   );
