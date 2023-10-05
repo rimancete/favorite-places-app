@@ -8,6 +8,7 @@ import AddPlace from 'screens/AddPlace';
 import Places from 'screens/Places';
 import Login from 'screens/Login';
 import Signup from 'screens/Signup';
+import Map from 'screens/Map';
 import theme from 'styles/theme';
 import { useAuth } from 'hooks';
 import { View } from 'react-native';
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   Signup: undefined;
   Places: undefined;
   AddPlace: undefined;
+  Map: undefined;
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -77,6 +79,7 @@ function AuthenticatedStack() {
         })}
       />
       <Stack.Screen name="AddPlace" component={AddPlace} options={{ title: 'Add a new Place' }} />
+      <Stack.Screen name="Map" component={Map} options={{ title: 'Choose location' }} />
     </Stack.Navigator>
   );
 }

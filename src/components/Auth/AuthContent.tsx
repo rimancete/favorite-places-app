@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { LoginScreenNavigationHookProps } from 'types';
+import { ScreensNavigationHookProps } from 'types';
 import { SigninType, SignupType } from 'types/models';
 import theme from 'styles/theme';
 import Button from 'components/Button';
@@ -21,7 +21,7 @@ export default function AuthContent({ isLogin = false, onAuthenticate }: AuthCon
     confirmPassword: false,
   });
 
-  const navigation = useNavigation<LoginScreenNavigationHookProps>();
+  const navigation = useNavigation<ScreensNavigationHookProps>();
 
   const switchAuthModeHandler = useCallback(() => {
     if (isLogin) {

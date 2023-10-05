@@ -11,4 +11,4 @@ type PlaceType = {
   location: LocationType;
 };
 
-export { PlaceType };
+export { PlaceType, LocationType };

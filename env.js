@@ -20,6 +20,7 @@ const client = z.object({
   AUTH_API_KEY: z.string(),
   API_TOKEN: z.string(),
   COMPANY: z.string(),
+  GOOGLE_API_KEY: z.string(),
 });
 
 // Get the environment from the process
@@ -36,6 +37,7 @@ const _clientEnv = {
   API_URL: process.env.API_URL,
   API_TOKEN: process.env.API_TOKEN,
   COMPANY: process.env.COMPANY,
+  GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
 };
 
 // we merge all variables into one object
