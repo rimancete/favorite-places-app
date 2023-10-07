@@ -1,12 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { PermissionStatus, getCurrentPositionAsync, useForegroundPermissions } from 'expo-location';
 
 import theme from 'styles/theme';
 import getMapPreview from 'utils/location';
 import { LocationType } from 'models';
-import { useNavigation } from '@react-navigation/native';
-import { ScreensNavigationHookProps } from 'types';
+import { AddPlaceNavigationProps, ScreensNavigationHookProps } from 'types';
 import Button from '../Button';
 
 export default function LocationPicker() {
@@ -15,6 +15,11 @@ export default function LocationPicker() {
   const navigation = useNavigation<ScreensNavigationHookProps>();
 
   const [locationPermission, requestLocationPermission] = useForegroundPermissions();
+
+  const route = useRoute<AddPlaceNavigationProps['route']>();
+  const isFocused = useIsFocused();
+
+  const mapPickedLocation = route.params && route.params.pickedLocation;
 
   const verifyPermissions = useCallback(async () => {
     if (locationPermission?.status === PermissionStatus.UNDETERMINED) {
@@ -53,8 +58,8 @@ export default function LocationPicker() {
   }, [verifyPermissions]);
 
   const pickOnMapHandler = useCallback(() => {
-    navigation.navigate('Map');
-  }, [navigation]);
+    navigation.navigate('Map', mapPickedLocation ? { pickedLocation: mapPickedLocation } : {});
+  }, [mapPickedLocation, navigation]);
 
   let locationPreview = <Text>No location picked yet</Text>;
 
@@ -62,6 +67,12 @@ export default function LocationPicker() {
     locationPreview = (
       <Image style={styles.mapPreviewImage} source={{ uri: getMapPreview(pickedLocation) }} />
     );
+
+  useEffect(() => {
+    if (isFocused && mapPickedLocation) {
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [isFocused, mapPickedLocation]);
 
   return (
     <View>

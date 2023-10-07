@@ -3,6 +3,11 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { FormContainer, ImagePicker, LocationPicker } from 'components';
 import theme from 'styles/theme';
+import { LocationType } from 'models';
+
+export interface AddPlaceParams {
+  pickedLocation?: LocationType;
+}
 
 export default function AddPlace() {
   const [enteredTitle, setEnteredTitle] = useState('');

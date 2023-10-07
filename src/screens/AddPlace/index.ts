@@ -1,1 +1,1 @@
-export { default } from './AddPlace';
+export { default, AddPlaceParams } from './AddPlace';

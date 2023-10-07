@@ -4,11 +4,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { IconButton } from 'components';
-import AddPlace from 'screens/AddPlace';
+import AddPlace, { AddPlaceParams } from 'screens/AddPlace';
 import Places from 'screens/Places';
 import Login from 'screens/Login';
 import Signup from 'screens/Signup';
-import Map from 'screens/Map';
+import Map, { MapParams } from 'screens/Map';
 import theme from 'styles/theme';
 import { useAuth } from 'hooks';
 import { View } from 'react-native';
@@ -19,15 +19,14 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Places: undefined;
-  AddPlace: undefined;
-  Map: undefined;
+  AddPlace: AddPlaceParams;
+  Map: MapParams;
 };
 
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// SET ROOT AUTHENTICATION NAVIGATIONS
 function AuthStack() {
   return (
     <Stack.Navigator
