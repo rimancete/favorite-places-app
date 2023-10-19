@@ -4,12 +4,17 @@ import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 import { PermissionStatus, getCurrentPositionAsync, useForegroundPermissions } from 'expo-location';
 
 import theme from 'styles/theme';
-import getMapPreview from 'utils/location';
+import { getAddress, getMapPreview } from 'utils/location';
 import { LocationType } from 'models';
 import { AddPlaceNavigationProps, ScreensNavigationHookProps } from 'types';
+import { PickedLocationType } from 'types/models';
 import Button from '../Button';
 
-export default function LocationPicker() {
+interface LocationPickerProps {
+  onPickLocation: (location: PickedLocationType) => void;
+}
+
+export default function LocationPicker({ onPickLocation }: LocationPickerProps) {
   const [pickedLocation, setPickedLocation] = useState<LocationType>();
 
   const navigation = useNavigation<ScreensNavigationHookProps>();
@@ -68,11 +73,22 @@ export default function LocationPicker() {
       <Image style={styles.mapPreviewImage} source={{ uri: getMapPreview(pickedLocation) }} />
     );
 
+  const handleLocation = useCallback(async () => {
+    if (pickedLocation) {
+      const address = await getAddress(pickedLocation);
+      onPickLocation({ ...pickedLocation, address });
+    }
+  }, [onPickLocation, pickedLocation]);
+
   useEffect(() => {
     if (isFocused && mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
     }
   }, [isFocused, mapPickedLocation]);
+
+  useEffect(() => {
+    handleLocation();
+  }, [pickedLocation, handleLocation]);
 
   return (
     <View>

@@ -16,7 +16,7 @@ import theme from 'styles/theme';
 
 interface ButtonProps extends PressableProps {
   children: TextProps['children'];
-  variant?: 'default' | 'flat' | 'outlined';
+  variant?: 'default' | 'flat' | 'outlined' | 'regular';
   icon?: keyof typeof MaterialIcons.glyphMap;
 }
 
@@ -29,6 +29,7 @@ export default function Button({
 }: ButtonProps) {
   const isFlat = variant === 'flat';
   const isOutlined = variant === 'outlined';
+  const isRegular = variant === 'regular';
 
   const outlinedPressableStyle: StyleProp<ViewStyle> = useMemo(() => {
     return {
@@ -101,16 +102,38 @@ export default function Button({
     color: theme().colors.primary200,
   };
 
+  const regularPressableStyle: StyleProp<ViewStyle> = {
+    paddingVertical: 8,
+    margin: 4,
+    backgroundColor: theme().colors.primary800,
+  };
+  const regularTextStyle: StyleProp<TextStyle> = {
+    color: theme().colors.primary50,
+  };
+
   return (
     <Pressable
       style={({ pressed }) => [
-        isFlat ? { ...flatPressableStyle } : styles.button,
+        isFlat
+          ? { ...flatPressableStyle }
+          : isRegular
+          ? { ...styles.button, ...regularPressableStyle }
+          : styles.button,
         pressed && styles.pressed,
       ]}
       {...props}
       onPress={onPress}>
       <View>
-        <Text style={isFlat ? { ...flatTextStyle } : styles.buttonText}>{children}</Text>
+        <Text
+          style={
+            isFlat
+              ? { ...flatTextStyle }
+              : isRegular
+              ? { ...styles.buttonText, ...regularTextStyle }
+              : styles.buttonText
+          }>
+          {children}
+        </Text>
       </View>
     </Pressable>
   );

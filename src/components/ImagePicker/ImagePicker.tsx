@@ -5,7 +5,11 @@ import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-
 import theme from 'styles/theme';
 import Button from '../Button';
 
-export default function ImagePicker() {
+interface ImagePickerProps {
+  onTakeImage: (imageUri: string) => void;
+}
+
+export default function ImagePicker({ onTakeImage }: ImagePickerProps) {
   const [pickedImage, setPickedImage] = useState<string | undefined>();
   const [cameraPermission, requestPermission] = useCameraPermissions();
 
@@ -43,8 +47,11 @@ export default function ImagePicker() {
       quality: 0.5,
     });
 
-    if (image.assets) setPickedImage(image.assets[0].uri);
-  }, [verifyPermissions]);
+    if (image.assets) {
+      setPickedImage(image.assets[0].uri);
+      onTakeImage(image.assets[0].uri);
+    }
+  }, [verifyPermissions, onTakeImage]);
 
   let imagePreview = <Text>No image taken yet</Text>;
 
