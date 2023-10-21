@@ -19,6 +19,7 @@ module.exports = function (api) {
             store: './src/store',
             assets: './src/assets',
             hooks: './src/hooks',
+            types: './src/types',
             '@env': './src/env.js',
           },
         },

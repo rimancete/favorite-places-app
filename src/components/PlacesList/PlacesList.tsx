@@ -1,11 +1,11 @@
 import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
 
-import { PlaceType } from 'models';
+import { Place } from 'models';
 import theme from 'styles/theme';
 import PlaceItem from './components/PlaceItem';
 
 interface PlacesListProps {
-  places: PlaceType[];
+  places: Place[];
 }
 
 export default function PlacesList({ places }: PlacesListProps) {
@@ -16,9 +16,9 @@ export default function PlacesList({ places }: PlacesListProps) {
       </View>
     );
 
-  const keyExtractor = (item: PlaceType) => item.id;
+  const keyExtractor = (item: Place) => item.id;
 
-  const renderItem = (itemData: ListRenderItemInfo<PlaceType>) => {
+  const renderItem = (itemData: ListRenderItemInfo<Place>) => {
     const { item } = itemData;
     return (
       <PlaceItem

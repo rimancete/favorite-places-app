@@ -1,3 +1,3 @@
-import { PlaceType, LocationType } from './places.model';
+import { LocationType, Place } from './places.model';
 
-export { PlaceType, LocationType };
+export { LocationType, Place };

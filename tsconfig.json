@@ -8,6 +8,7 @@
     "paths": {
       "components": ["components/index.ts"],
       "utils/*": ["utils/*"],
+      "types/*": ["types/*"],
       "@env": ["env.js"]
     }
   }

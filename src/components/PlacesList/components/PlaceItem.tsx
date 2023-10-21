@@ -1,8 +1,8 @@
-import { PlaceType } from 'models';
+import { Place } from 'models';
 import { GestureResponderEvent, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface PlaceItemProps {
-  place: PlaceType;
+  place: Place;
   onSelect: (event: GestureResponderEvent) => void | null;
 }
 

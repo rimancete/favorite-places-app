@@ -1,18 +1,19 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { FormContainer, ImagePicker, LocationPicker } from 'components';
 import theme from 'styles/theme';
-import { LocationType } from 'models';
+import { LocationType, Place } from 'models';
 import { PickedLocationType } from 'types/models';
+import { AddPlaceNavigationProps } from 'types';
 
 export interface AddPlaceParams {
   pickedLocation?: LocationType;
 }
 
-export default function AddPlace() {
+export default function AddPlace({ navigation }: AddPlaceNavigationProps) {
   const [enteredTitle, setEnteredTitle] = useState('');
-  const [pickedLoaction, setPickedLoaction] = useState<PickedLocationType>();
+  const [pickedLocation, setPickedLocation] = useState<PickedLocationType>();
   const [selectedImage, setSelectedImage] = useState('');
 
   const changeTitleHandler = useCallback((text: string) => {
@@ -23,14 +24,23 @@ export default function AddPlace() {
     setSelectedImage(imageUri);
   }, []);
   const pickLocationHandler = useCallback((location: PickedLocationType) => {
-    setPickedLoaction(location);
+    setPickedLocation(location);
   }, []);
 
   const savePlaceHandler = useCallback(() => {
-    console.log('enteredTitle', enteredTitle);
-    console.log('selectedImage', selectedImage);
-    console.log('pickedLoaction', pickedLoaction);
-  }, [enteredTitle, pickedLoaction, selectedImage]);
+    const titleIsValid = !!enteredTitle;
+    const imageUriIsValid = !!enteredTitle;
+    const locationIsValid = !!pickedLocation;
+
+    if (!titleIsValid || !imageUriIsValid || !locationIsValid) {
+      Alert.alert('Invalid input', 'Please check your entered place data.');
+      return;
+    }
+
+    const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
+
+    navigation.navigate('Places', { place: placeData });
+  }, [enteredTitle, navigation, pickedLocation, selectedImage]);
 
   return (
     <FormContainer onSubmit={savePlaceHandler}>

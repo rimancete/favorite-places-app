@@ -3,6 +3,7 @@ import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-naviga
 import { RootStackParamList } from 'components/Screens/Screens';
 
 export type AddPlaceNavigationProps = NativeStackScreenProps<RootStackParamList, 'AddPlace'>;
+export type PlacesNavigationProps = NativeStackScreenProps<RootStackParamList, 'Places'>;
 export type MapNavigationProps = NativeStackScreenProps<RootStackParamList, 'Map'>;
 
 export type ScreensNavigationHookProps = NativeStackNavigationProp<RootStackParamList>;

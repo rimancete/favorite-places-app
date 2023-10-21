@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { IconButton } from 'components';
 import AddPlace, { AddPlaceParams } from 'screens/AddPlace';
-import Places from 'screens/Places';
+import Places, { PlacesParams } from 'screens/Places';
 import Login from 'screens/Login';
 import Signup from 'screens/Signup';
 import Map, { MapParams } from 'screens/Map';
@@ -18,7 +18,7 @@ import { User } from 'hooks/useAuth/useAuth';
 export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
-  Places: undefined;
+  Places: PlacesParams;
   AddPlace: AddPlaceParams;
   Map: MapParams;
 };
