@@ -14,6 +14,7 @@ import { useAuth } from 'hooks';
 import { View } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from 'hooks/useAuth/useAuth';
+import { dbinit } from 'utils/database';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -98,6 +99,9 @@ function Screens() {
   const [appIsloading, setAppIsLoading] = useState(true);
 
   useEffect(() => {
+    async function startDb() {
+      await dbinit().catch((error) => console.log(error));
+    }
     async function getStoredToken() {
       const storedToken = await AsyncStorage.getItem('token'); // USE ENV
       if (storedToken)
@@ -107,6 +111,7 @@ function Screens() {
 
       setAppIsLoading(false);
     }
+    startDb();
     getStoredToken();
   }, [updateUser]);
 

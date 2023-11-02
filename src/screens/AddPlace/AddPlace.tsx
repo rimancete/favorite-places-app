@@ -6,6 +6,7 @@ import theme from 'styles/theme';
 import { LocationType, Place } from 'models';
 import { PickedLocationType } from 'types/models';
 import { AddPlaceNavigationProps } from 'types';
+import { request } from 'utils/request';
 
 export interface AddPlaceParams {
   pickedLocation?: LocationType;
@@ -27,7 +28,7 @@ export default function AddPlace({ navigation }: AddPlaceNavigationProps) {
     setPickedLocation(location);
   }, []);
 
-  const savePlaceHandler = useCallback(() => {
+  const savePlaceHandler = useCallback(async () => {
     const titleIsValid = !!enteredTitle;
     const imageUriIsValid = !!enteredTitle;
     const locationIsValid = !!pickedLocation;
@@ -38,8 +39,8 @@ export default function AddPlace({ navigation }: AddPlaceNavigationProps) {
     }
 
     const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
-
-    navigation.navigate('Places', { place: placeData });
+    const response = await request({ body: placeData });
+    if (!response.errorMessage) navigation.navigate('Places', { place: placeData });
   }, [enteredTitle, navigation, pickedLocation, selectedImage]);
 
   return (

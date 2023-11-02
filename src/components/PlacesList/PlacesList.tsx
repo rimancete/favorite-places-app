@@ -29,10 +29,20 @@ export default function PlacesList({ places }: PlacesListProps) {
       />
     );
   };
-  return <FlatList data={places} keyExtractor={keyExtractor} renderItem={renderItem} />;
+  return (
+    <FlatList
+      style={styles.list}
+      data={places}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
+  list: {
+    margin: 24,
+  },
   fallbackContainer: {
     flex: 1,
     justifyContent: 'center',

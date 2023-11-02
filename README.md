@@ -1,7 +1,7 @@
 
 # Favorite Places Demo App
 
-Este é um app demonstração para *gerenciar locais favoritos*, em React Native, para estudo / prática de conceitos relacionados a comunicação com BE e seus tratamentos, contexto, hooks, navegação (com React Navigation), incluindo menus aninhados, e questões avançadas de layout (tema, grids, orientação).
+Este é um app demonstração para *gerenciar locais favoritos*, em React Native, para estudo / prática de conceitos relacionados a comunicação dispositivos nativos como câmera, GPS e armazenamento local, bem como autenticação, contexto, hooks, navegação, e questões avançadas de layout (tema, grids, orientação).
 O projeto está estruturado em `/src` com prettier e eslint, baseado em um boilerplate que criei.
 <!-- 
 ### Mobile Perspectiva:
@@ -14,6 +14,7 @@ O projeto está estruturado em `/src` com prettier e eslint, baseado em um boile
 - Constate - Gerenciador de contexto React
 - Zod / dotenv - Tipagens de variávies de ambiente
 - axios - Requisições
+- SQLite - Armazenamento local
 
 # Instalando e rodando o projeto
 Antes de instalar/rodar o projeto, você precisa dos seguintes itens:
