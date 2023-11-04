@@ -1,7 +1,10 @@
 import { FlatList, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
+import { ScreensNavigationHookProps } from 'types/navigation.types';
 import { Place } from 'models';
 import theme from 'styles/theme';
+import { useCallback } from 'react';
 import PlaceItem from './components/PlaceItem';
 
 interface PlacesListProps {
@@ -9,6 +12,15 @@ interface PlacesListProps {
 }
 
 export default function PlacesList({ places }: PlacesListProps) {
+  const navigation = useNavigation<ScreensNavigationHookProps>();
+
+  const selectPlaceHandler = useCallback(
+    (placeId: number) => {
+      navigation.navigate('PlaceDetails', { placeId });
+    },
+    [navigation],
+  );
+
   if (!places || !places.length)
     return (
       <View style={styles.fallbackContainer}>
@@ -16,18 +28,11 @@ export default function PlacesList({ places }: PlacesListProps) {
       </View>
     );
 
-  const keyExtractor = (item: Place) => item.id;
+  const keyExtractor = (item: Place) => String(item.id as number);
 
   const renderItem = (itemData: ListRenderItemInfo<Place>) => {
     const { item } = itemData;
-    return (
-      <PlaceItem
-        place={item}
-        onSelect={() => {
-          /* */
-        }}
-      />
-    );
+    return <PlaceItem place={item} onSelect={selectPlaceHandler} />;
   };
   return (
     <FlatList

@@ -5,10 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { IconButton } from 'components';
 import AddPlace, { AddPlaceParams } from 'screens/AddPlace';
-import Places, { PlacesParams } from 'screens/Places';
+import Places from 'screens/Places';
 import Login from 'screens/Login';
 import Signup from 'screens/Signup';
 import Map, { MapParams } from 'screens/Map';
+import PlaceDetails, { PlaceDetailsParams } from 'screens/PlaceDetails';
 import theme from 'styles/theme';
 import { useAuth } from 'hooks';
 import { View } from 'react-native';
@@ -19,9 +20,10 @@ import { dbinit } from 'utils/database';
 export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
-  Places: PlacesParams;
+  Places: undefined;
   AddPlace: AddPlaceParams;
   Map: MapParams;
+  PlaceDetails: PlaceDetailsParams;
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -80,6 +82,11 @@ function AuthenticatedStack() {
       />
       <Stack.Screen name="AddPlace" component={AddPlace} options={{ title: 'Add a new Place' }} />
       <Stack.Screen name="Map" component={Map} options={{ title: 'Choose location' }} />
+      <Stack.Screen
+        name="PlaceDetails"
+        component={PlaceDetails}
+        options={{ title: 'Place details' }}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,1 +1,1 @@
-export { default } from './PlaceDetails';
+export { default, PlaceDetailsParams } from './PlaceDetails';

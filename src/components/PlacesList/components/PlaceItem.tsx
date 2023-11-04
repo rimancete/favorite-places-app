@@ -1,16 +1,18 @@
 import { Place } from 'models';
-import { GestureResponderEvent, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import theme from 'styles/theme';
 
 interface PlaceItemProps {
   place: Place;
-  onSelect: (event: GestureResponderEvent) => void | null;
+  onSelect: (id: number) => void | null;
 }
 
 export default function PlaceItem({ place, onSelect }: PlaceItemProps) {
   const { title, address, imageUri } = place;
   return (
-    <Pressable style={({ pressed }) => [styles.item, pressed && styles.pressed]} onPress={onSelect}>
+    <Pressable
+      style={({ pressed }) => [styles.item, pressed && styles.pressed]}
+      onPress={() => onSelect(place.id as number)}>
       <Image style={styles.image} source={{ uri: imageUri }} />
       <View style={styles.info}>
         <Text style={styles.title}>{title}</Text>

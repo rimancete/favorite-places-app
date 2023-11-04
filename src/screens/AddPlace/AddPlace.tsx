@@ -7,12 +7,17 @@ import { LocationType, Place } from 'models';
 import { PickedLocationType } from 'types/models';
 import { AddPlaceNavigationProps } from 'types';
 import { request } from 'utils/request';
+import { insertPlace } from 'utils/database';
+import { useAuth } from 'hooks';
+import { User } from 'hooks/useAuth/useAuth';
 
 export interface AddPlaceParams {
   pickedLocation?: LocationType;
 }
 
 export default function AddPlace({ navigation }: AddPlaceNavigationProps) {
+  const { updateUser } = useAuth();
+
   const [enteredTitle, setEnteredTitle] = useState('');
   const [pickedLocation, setPickedLocation] = useState<PickedLocationType>();
   const [selectedImage, setSelectedImage] = useState('');
@@ -40,8 +45,21 @@ export default function AddPlace({ navigation }: AddPlaceNavigationProps) {
 
     const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
     const response = await request({ body: placeData });
-    if (!response.errorMessage) navigation.navigate('Places', { place: placeData });
-  }, [enteredTitle, navigation, pickedLocation, selectedImage]);
+
+    if (!response.errorMessage) {
+      await insertPlace(placeData); // CHANGE LOGICAL TO INSERT ID BY API REST
+      navigation.navigate('Places');
+      return;
+    }
+    Alert.alert('Authentication failed!', 'Please signin and try again.', [
+      {
+        onPress: async () => {
+          updateUser({} as User);
+          navigation.navigate('Login');
+        },
+      },
+    ]);
+  }, [enteredTitle, navigation, pickedLocation, selectedImage, updateUser]);
 
   return (
     <FormContainer onSubmit={savePlaceHandler}>

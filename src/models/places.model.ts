@@ -5,7 +5,7 @@ type LocationType = {
 };
 
 class Place {
-  id: string;
+  id?: number;
 
   title: string;
 
@@ -15,12 +15,12 @@ class Place {
 
   location: LocationType;
 
-  constructor(title: string, imageUri: string, location: LocationType) {
+  constructor(title: string, imageUri: string, location: LocationType, id?: number) {
     this.title = title;
     this.imageUri = imageUri;
     this.address = location.address;
     this.location = { lat: location.lat, lng: location.lng, address: location.address };
-    this.id = new Date().toString() + Math.random().toString();
+    this.id = id;
   }
 }
 
