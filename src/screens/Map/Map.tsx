@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 
@@ -8,23 +8,29 @@ import { MapNavigationProps, ScreensNavigationHookProps } from 'types';
 import { IconButton } from 'components';
 
 export interface MapParams {
-  pickedLocation?: LocationType;
+  pickedLocation?: LocationType | Record<string, never>;
 }
 
 export default function Map({ route }: MapNavigationProps) {
   const { pickedLocation } = route.params || {};
-  const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined>(
-    pickedLocation,
+
+  const initialLocation = useMemo(() => {
+    return (
+      !!pickedLocation?.lat && {
+        lat: pickedLocation.lat,
+        lng: pickedLocation.lng,
+      }
+    );
+  }, [pickedLocation]);
+
+  const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined | false>(
+    initialLocation,
   );
   const navigation = useNavigation<ScreensNavigationHookProps>();
 
-  const initialLocation = {
-    latitude: pickedLocation?.lat || -22.7412029889,
-    longitude: pickedLocation?.lng || -47.3438429832,
-  };
   const REGION = {
-    latitude: initialLocation.latitude,
-    longitude: initialLocation.longitude,
+    latitude: initialLocation ? initialLocation.lat : -22.7412029889,
+    longitude: initialLocation ? initialLocation.lng : -47.3438429832,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.04021,
   };
@@ -47,12 +53,23 @@ export default function Map({ route }: MapNavigationProps) {
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
+    // SOLVE EDITING MODE HEADER
+    console.log('Map - initialLocation', initialLocation);
+    console.log('Map - pickedLocation', pickedLocation);
+
+    if (initialLocation || initialLocation !== false) {
+      navigation.setOptions({
+        title: 'View Location',
+      });
+      return;
+    }
+
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
         <IconButton color={tintColor} size={32} icon="save" onPress={savePickedLocation} />
       ),
     });
-  }, [navigation, savePickedLocation]);
+  }, [initialLocation, navigation, savePickedLocation]);
 
   return (
     <MapView style={styles.map} initialRegion={REGION} onPress={selectLocationHandler}>

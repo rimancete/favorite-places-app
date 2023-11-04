@@ -22,7 +22,7 @@ export type RootStackParamList = {
   Signup: undefined;
   Places: undefined;
   AddPlace: AddPlaceParams;
-  Map: MapParams;
+  Map: MapParams | undefined;
   PlaceDetails: PlaceDetailsParams;
 };
 
@@ -85,7 +85,7 @@ function AuthenticatedStack() {
       <Stack.Screen
         name="PlaceDetails"
         component={PlaceDetails}
-        options={{ title: 'Place details' }}
+        options={{ title: 'Loading Place...' }}
       />
     </Stack.Navigator>
   );

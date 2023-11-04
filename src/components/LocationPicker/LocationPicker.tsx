@@ -63,7 +63,11 @@ export default function LocationPicker({ onPickLocation }: LocationPickerProps) 
   }, [verifyPermissions]);
 
   const pickOnMapHandler = useCallback(() => {
-    navigation.navigate('Map', mapPickedLocation ? { pickedLocation: mapPickedLocation } : {});
+    // console.log('LocationPicker - mapPickedLocation', mapPickedLocation);
+    navigation.navigate(
+      'Map',
+      mapPickedLocation ? { pickedLocation: mapPickedLocation } : { pickedLocation: {} },
+    );
   }, [mapPickedLocation, navigation]);
 
   let locationPreview = <Text>No location picked yet</Text>;

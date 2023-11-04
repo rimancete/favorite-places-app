@@ -90,3 +90,24 @@ export function fetchPlaces() {
 
   return promise;
 }
+
+export function fetchPlaceDetails(id: number) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM places WHERE id = ?',
+        [id],
+        (_, result) => {
+          // eslint-disable-next-line no-underscore-dangle
+          resolve(result.rows._array[0]);
+        },
+        (_, error) => {
+          reject(error);
+          return true;
+        },
+      );
+    });
+  });
+
+  return promise;
+}
