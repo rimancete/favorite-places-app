@@ -12,10 +12,11 @@ export interface PlaceDetailsParams {
 
 export default function PlaceDetails({ route, navigation }: PlaceDetailsNavigationProps) {
   const [fetchedPlace, setFetchedPlace] = useState<Place>();
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   const showOnMapHandler = useCallback(() => {
     navigation.navigate('Map', {
       pickedLocation: { lat: fetchedPlace?.lat as number, lng: fetchedPlace?.lng as number },
+      isView: true,
     });
   }, [fetchedPlace, navigation]);
 

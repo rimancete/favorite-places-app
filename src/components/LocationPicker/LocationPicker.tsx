@@ -63,10 +63,9 @@ export default function LocationPicker({ onPickLocation }: LocationPickerProps) 
   }, [verifyPermissions]);
 
   const pickOnMapHandler = useCallback(() => {
-    // console.log('LocationPicker - mapPickedLocation', mapPickedLocation);
     navigation.navigate(
       'Map',
-      mapPickedLocation ? { pickedLocation: mapPickedLocation } : { pickedLocation: {} },
+      mapPickedLocation && { pickedLocation: mapPickedLocation, isView: false },
     );
   }, [mapPickedLocation, navigation]);
 

@@ -9,10 +9,11 @@ import { IconButton } from 'components';
 
 export interface MapParams {
   pickedLocation?: LocationType | Record<string, never>;
+  isView?: boolean;
 }
 
 export default function Map({ route }: MapNavigationProps) {
-  const { pickedLocation } = route.params || {};
+  const { pickedLocation, isView } = route.params || {};
 
   const initialLocation = useMemo(() => {
     return (
@@ -35,11 +36,15 @@ export default function Map({ route }: MapNavigationProps) {
     longitudeDelta: 0.04021,
   };
 
-  const selectLocationHandler = useCallback((event: MapPressEvent) => {
-    const { latitude: lat, longitude: lng } = event.nativeEvent.coordinate;
+  const selectLocationHandler = useCallback(
+    (event: MapPressEvent) => {
+      if (isView) return;
+      const { latitude: lat, longitude: lng } = event.nativeEvent.coordinate;
 
-    setSelectedLocation({ lat, lng });
-  }, []);
+      setSelectedLocation({ lat, lng });
+    },
+    [isView],
+  );
 
   const savePickedLocation = useCallback(() => {
     if (!selectedLocation) {
@@ -53,11 +58,7 @@ export default function Map({ route }: MapNavigationProps) {
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
-    // SOLVE EDITING MODE HEADER
-    console.log('Map - initialLocation', initialLocation);
-    console.log('Map - pickedLocation', pickedLocation);
-
-    if (initialLocation || initialLocation !== false) {
+    if (isView) {
       navigation.setOptions({
         title: 'View Location',
       });
@@ -69,7 +70,7 @@ export default function Map({ route }: MapNavigationProps) {
         <IconButton color={tintColor} size={32} icon="save" onPress={savePickedLocation} />
       ),
     });
-  }, [initialLocation, navigation, savePickedLocation]);
+  }, [initialLocation, isView, navigation, savePickedLocation]);
 
   return (
     <MapView style={styles.map} initialRegion={REGION} onPress={selectLocationHandler}>

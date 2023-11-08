@@ -9,10 +9,11 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  useWindowDimensions,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
 import theme from 'styles/theme';
+import getLandscapeOrientation from 'utils/getLandscapeLayout';
 
 interface ButtonProps extends PressableProps {
   children: TextProps['children'];
@@ -27,6 +28,13 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
+  const { height } = useWindowDimensions();
+
+  const isLandscape = getLandscapeOrientation(height);
+
+  const landscapeButtonStyle: StyleProp<ViewStyle> = {
+    marginBottom: 32,
+  };
   const isFlat = variant === 'flat';
   const isOutlined = variant === 'outlined';
   const isRegular = variant === 'regular';
@@ -120,6 +128,7 @@ export default function Button({
           ? { ...styles.button, ...regularPressableStyle }
           : styles.button,
         pressed && styles.pressed,
+        isLandscape && (isFlat || isRegular) && landscapeButtonStyle,
       ]}
       {...props}
       onPress={onPress}>
